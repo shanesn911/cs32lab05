@@ -28,7 +28,6 @@ int main(int argc, char **argv) {
     // Read in the pixel data
     struct pixel **pixels = read_pixel_array(image, pixel_array_offset, width, height);
 
-    fclose(image);
 
     // Print out some pixels from each of the image's corners.
     for (int i = 0; i < 5; i++) {
@@ -41,6 +40,10 @@ int main(int argc, char **argv) {
     }
 
     // TODO: Clean up so that valgrind reports no memory is still in use
-
+    for (int i = 0; i < height; i++) {
+        free(pixels[i]);
+    }
+    free(pixels);
+    fclose(image);
     return 0;
 }
